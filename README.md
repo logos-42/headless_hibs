@@ -1,5 +1,7 @@
 # headless_hibs
 
+> **Languages / 语言:** [English](README.md) · [简体中文](README.zh-CN.md)
+
 A research codebase exploring **Liquid Time-Constant Networks (LTC)** with a
 fiber-bundle geometric backbone and a small ecosystem for training, exporting,
 and inspecting models. The project is best read as an evolving notebook of
@@ -10,9 +12,26 @@ This repository is published as **source only**. Tests, datasets, experiment
 artifacts, internal logs, and AI-tooling directories are intentionally excluded
 — see `.gitignore` for the full exclusion list.
 
+---
+
+## Table of contents
+
+- [Repository layout](#repository-layout)
+- [Installation](#installation)
+- [Quick start](#quick-start)
+- [Library usage](#library-usage)
+- [Research trajectory: V18 to V20.3](#research-trajectory-v18-to-v203)
+  - [Seven lessons from the V16.5 to V20.3 sweep](#seven-lessons-from-the-v165-to-v203-sweep)
+  - [What survived into V20.3](#what-survived-into-v203)
+  - [Roadmap](#roadmap)
+- [Documentation index](#documentation-index)
+- [License](#license)
+
+---
+
 ## Repository layout
 
-```
+```text
 headless_hibs/
 ├── liquid_net/              # Core liquid neural network library
 │   ├── models/              # LiquidNet, LTC cell, sparse LTC cell
@@ -26,11 +45,12 @@ headless_hibs/
 ├── twistor_LMT/             # Twistor-based liquid time-constant package
 ├── scripts/                 # Training & smoke-test entry points
 ├── main.py                  # Top-level entry point
-├── README.md
+├── README.md                # English README (this file)
+├── README.zh-CN.md          # 简体中文 README
 └── .gitignore
 ```
 
-## Installation
+## 🔧 Installation
 
 Targets **Python 3.12+** and depends on PyTorch / NumPy. No `requirements.txt`
 is shipped in the public release — install the runtime dependencies you need
@@ -40,7 +60,7 @@ for the path you take:
 pip install torch numpy matplotlib pyyaml
 ```
 
-## Quick start
+## ▶️ Quick start
 
 ```bash
 # Smoke test the install
@@ -53,7 +73,7 @@ python scripts/train_hibs_0_16.py
 python main.py
 ```
 
-## Library usage
+## 📚 Library usage
 
 The `liquid_net` package exposes the model, solvers, and training utilities
 directly:
@@ -66,7 +86,7 @@ from liquid_net.training import train
 model = LiquidNet(input_dim=1, hidden_dim=16, output_dim=1)
 ```
 
-## Research trajectory — V18 → V20.3
+## Research trajectory: V18 to V20.3
 
 The most recent work turned the static inference stack into an **active,
 continually-learning reasoner**. The headline numbers (full detail in
@@ -85,7 +105,7 @@ continually-learning reasoner**. The headline numbers (full detail in
 | V20.2 | Decay + cooldown + weighted loss | Weighted path works (world_loss 1.80); hard cooldown breaks |
 | **V20.3** | **Two-stage training + probabilistic cooldown** | **PPL 1e52 → 388, world_loss 0.09, WRITE→READ pair 99.5%** |
 
-### Seven lessons from the V16.5 → V20.3 sweep
+### Seven lessons from the V16.5 to V20.3 sweep
 
 1. **Feedback density is the prerequisite for continual learning.** V18–V18.9
    spent six iterations confirming that until actions get 100% feedback,
@@ -132,6 +152,35 @@ continually-learning reasoner**. The headline numbers (full detail in
 The full report trail lives under `docs/` in the working tree; the public
 release omits the full document set.
 
-## License
+## 📖 Documentation index
+
+The public release ships only the source tree. The full research notebook
+(test scripts, datasets, experiment reports, plans) is excluded by
+`.gitignore` and lives in the working tree locally. When cloned with the
+full set, the key entries are:
+
+| Document | Topic |
+| :------- | :----- |
+| `docs/v16_5_to_v20_3_synthesis.md` | Seven-lesson synthesis of the whole sweep |
+| `docs/v18_series_summary_report.md` | V18.0 → V18.8 evolution (online self-update) |
+| `docs/v19_primitive_action_report.md` | V19 discrete K=5 primitives, 100% feedback |
+| `docs/v20_3_two_stage_report.md` | V20.3 two-stage training, PPL 1e52 → 388 |
+| `docs/v20_2_decay_world_report.md` | V20.2 weighted loss + decay + cooldown |
+| `docs/v20_notebook_world_report.md` | V20 Notebook World + uniform EFE |
+| `docs/README_HIBS_0_16.md` / `docs/README_USER.md` | Library & user-facing overviews |
+| `docs/FINAL_REPORT.md` | End-of-sprint consolidated report |
+
+Source-of-truth modules worth reading first:
+
+| Path | Why |
+| :--- | :--- |
+| `liquid_net/models/ltc_cell.py` | Core LTC cell (replaces V18-era SSM) |
+| `liquid_net/models/sparse_ltc_cell.py` | Sparse variant for memory efficiency |
+| `liquid_net/solvers/rk4.py` | Default ODE solver |
+| `liquid_net/training/train.py` | Training loop and loss wiring |
+| `scripts/train_hibs_0_16.py` | End-to-end training entry point |
+| `scripts/smoke_test.py` | Minimal-install verification |
+
+## 📄 License
 
 MIT — see source headers for individual module licenses.
