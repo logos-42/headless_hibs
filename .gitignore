@@ -113,6 +113,15 @@ KILO.md
 htmlcov/
 .cache/
 
+# Project subtrees not published in the open-source release
+.github/
+datetest/
+docs/
+mobile_examples/
+plans/
+results/
+tests/
+
 # Misc runtime artifacts
 *.tmp
 *.bak
