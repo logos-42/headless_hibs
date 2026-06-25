@@ -1,0 +1,120 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+mimo-proxy
+
+# PyTorch
+*.pth
+*.pt
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Images
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Logs
+*.log
+
+# Git backup
+".git_backup/"
+
+# Datasets & cache
+*.jsonl
+*.json
+*.parquet
+*.arrow
+*.cache/
+.huggingface/
+datasets--*/
+
+# Download scripts
+download_*.py
+
+# Test scale scripts (large output)
+test_growth_scale.py
+
+# Checkpoints
+checkpoints/
+*.ckpt
+*.pt
+*.pth
+
+# Local secrets (API keys etc)
+.env
+.env.local
+*.env
+
+# AI tooling / assistant configs (NOT part of the project source)
+.claude/
+.kilo/
+.spec-workflow/
+.opencode/
+.aider*
+.cursor*
+.windsurf/
+.continue/
+.roo/
+.bolt/
+.cody/
+.codeium/
+.tabnine/
+.gemini/
+.copilot/
+.crush/
+.morphllm/
+.clinerules/
+.opencode.json
+aider.conf.yml
+.mcp_config*
+.gptengineer/
+.devin/
+.replit/
+claude.md
+CLAUDE.md
+kilo.md
+KILO.md
+
+# Editor / cache
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.tox/
+.nox/
+.coverage
+htmlcov/
+.cache/
+
+# Misc runtime artifacts
+*.tmp
+*.bak
+*.orig
+nul

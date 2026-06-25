@@ -1,0 +1,54 @@
+# Twistor-inspired Liquid Neural Network Configuration
+# Stability-optimized version
+
+# Model parameters
+model:
+  input_dim: 2
+  hidden_dim: 16
+  output_dim: 1
+  dt: 0.1  # Time step for Euler integration (tunable)
+  tau_min: 0.01  # Minimum time constant
+  tau_max: 1.0   # Maximum time constant
+  dzdt_max: 10.0 # Maximum |dz/dt| for normalization
+  z_max: 100.0   # Maximum |z| state
+
+# Training parameters
+training:
+  n_epochs: 200
+  batch_size: 32
+  lr: 0.01
+  stability_weight: 0.01  # Weight for ||dz/dt||^2 regularization
+  l2_weight: 0.001        # Weight for L2 regularization on z
+  grad_clip: 1.0          # Gradient clipping threshold
+  device: "cpu"
+
+# Dataset parameters
+dataset:
+  n_samples_train: 1000
+  n_samples_val: 200
+  seq_len: 50
+  noise_std: 0.1
+
+# Optimizer parameters
+optimizer:
+  type: "adam"
+  lr: 0.01
+  weight_decay: 0.0
+
+# Scheduler parameters
+scheduler:
+  type: "ReduceLROnPlateau"
+  patience: 20
+  factor: 0.5
+
+# Logging
+logging:
+  print_every: 20
+  save_model: true
+  model_path: "twistor_LMT_stable.pth"
+  plot_curves: true
+  curves_path: "training_curves.png"
+  plot_predictions: true
+  predictions_path: "predictions.png"
+  plot_diagnostics: true  # Plot z trajectory and tau distribution
+  diagnostics_path: "z_trajectory.png"
