@@ -41,8 +41,12 @@ headless_hibs/
 │   └── configs/             # Default model configuration
 ├── hibs_studio/             # Model browser / trainer UI helpers
 ├── hibs_export/             # Export scripts (mobile / on-device formats)
+├── hibs_cli/                # CLI interface for HIBS
 ├── twistor_studio/          # Studio utilities for twistor-based models
 ├── twistor_LMT/             # Twistor-based liquid time-constant package
+├── headless/                # Headless bridge and training modules
+├── models/                  # Pre-trained model checkpoints (.pt)
+├── poc/                     # Proof-of-concept experiments
 ├── scripts/                 # Training & smoke-test entry points
 ├── main.py                  # Top-level entry point
 ├── README.md                # English README (this file)
@@ -104,6 +108,10 @@ continually-learning reasoner**. The headline numbers (full detail in
 | V20.1 | Irreversible "tombstone" tokens | TOME colludes at 98% — new shortcut |
 | V20.2 | Decay + cooldown + weighted loss | Weighted path works (world_loss 1.80); hard cooldown breaks |
 | **V20.3** | **Two-stage training + probabilistic cooldown** | **PPL 1e52 → 388, world_loss 0.09, WRITE→READ pair 99.5%** |
+| V20.5 | Two-stage + healthy world (V20.4b-4) | PPL 544, content 84.5%, tombstone 1.9%, first dual win |
+| V21 | Causal world with position binding | 87% set_decl but only 17.4% pos_decl (false positive) |
+| V21.1 | Strict position evaluation | Exposed V21's 87% as set-theoretic false positive |
+| **V22** | **WRITE freeze + big model + position weight** | **pos_decl 17.2% → 40.0% (+22.8%), first true declarative causality** |
 
 ### Seven lessons from the V16.5 to V20.3 sweep
 
@@ -142,12 +150,11 @@ continually-learning reasoner**. The headline numbers (full detail in
 
 ### Roadmap
 
-- **V20.4** — resolve the weighting-vs-cooldown tension (TOME back to 0.1,
-  hard cap on ERASE usage, `N_RESPONSE=32`).
-- **V21** — long-horizon continual learning (2K+ steps, push world_loss
-  toward 0.01).
-- **V22** — transfer to real-world interaction (real file I/O).
-- **V23** — multi-agent coordination (two V20.3 models sharing a notebook).
+- **V22.1** — better trained model (longer pretraining, PPL < 50)
+- **V22.2** — better world (healthier content, lower tombstone)
+- **V22.3** — multi-position learning (beyond position 0)
+- **V23** — transfer to real-world interaction (real file I/O)
+- **V24** — multi-agent coordination (two V20.3+ models sharing a notebook)
 
 The full report trail lives under `docs/` in the working tree; the public
 release omits the full document set.
@@ -165,8 +172,18 @@ full set, the key entries are:
 | `docs/v18_series_summary_report.md` | V18.0 → V18.8 evolution (online self-update) |
 | `docs/v19_primitive_action_report.md` | V19 discrete K=5 primitives, 100% feedback |
 | `docs/v20_3_two_stage_report.md` | V20.3 two-stage training, PPL 1e52 → 388 |
-| `docs/v20_2_decay_world_report.md` | V20.2 weighted loss + decay + cooldown |
-| `docs/v20_notebook_world_report.md` | V20 Notebook World + uniform EFE |
+| `docs/v20_5_two_stage_notebook_report.md` | V20.5 two-stage + healthy world, first dual win |
+| `docs/v21_1_proper_evaluation_report.md` | V21.1 strict position evaluation, exposed false positive |
+| `docs/v22_frozen_world_report.md` | V22 WRITE freeze breakthrough, 40% declarative causality |
+| `docs/v18_v20_5_comprehensive_report.md` | Comprehensive report from V18 to V20.5 |
+| `docs/v20_4_healthier_world_plan.md` | V20.4 healthier world design plan |
+| `docs/v20_4a_healthier_world_report.md` | V20.4a healthier world report |
+| `docs/v20_4b_active_inference_report.md` | V20.4b active inference report |
+| `docs/v20_4c_ablation_report.md` | V20.4c ablation study report |
+| `docs/v21_causal_world_report.md` | V21 causal world report |
+| `docs/v22_1_better_trained_report.md` | V22.1 better trained model report |
+| `docs/v22_2_better_world_report.md` | V22.2 better world report |
+| `docs/v22_frozen_world_plan.md` | V22 frozen world design plan |
 | `docs/README_HIBS_0_16.md` / `docs/README_USER.md` | Library & user-facing overviews |
 | `docs/FINAL_REPORT.md` | End-of-sprint consolidated report |
 

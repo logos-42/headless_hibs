@@ -47,10 +47,12 @@ def main():
     }, CKPT_PATH)
     print(f"  ✅ 保存: {CKPT_PATH}")
 
-    # 2. CLI info
-    print("\n[2/5] 测试 `hibs info` ...")
+    # 2. headless info
+    print("\n[2/5] 测试 `headless info` ...")
+    NODE = "node"
+    HEADLESS_CLI = [NODE, str(ROOT / "headless" / "dist" / "cli" / "index.js")]
     result = subprocess.run(
-        [sys.executable, "-m", "hibs_cli", "info", "--ckpt", str(CKPT_PATH)],
+        [*HEADLESS_CLI, "info", "--ckpt", str(CKPT_PATH)],
         capture_output=True, text=True, cwd=str(ROOT),
     )
     if result.returncode != 0:
@@ -58,23 +60,22 @@ def main():
         return
     print("  " + result.stdout.replace("\n", "\n  ").strip())
 
-    # 3. CLI chat (echo test, 输入 quit 立即退出)
-    print("\n[3/5] 测试 `hibs chat` (输入 'quit') ...")
+    # 3. headless chat (echo test, 输入 quit 立即退出)
+    print("\n[3/5] 测试 `headless chat` (输入 'quit') ...")
     result = subprocess.run(
-        [sys.executable, "-m", "hibs_cli", "chat",
+        [*HEADLESS_CLI, "chat",
          "--ckpt", str(CKPT_PATH),
          "--max-tokens", "8",
          "--temperature", "1.0"],
         input="quit\n",
         capture_output=True, text=True, cwd=str(ROOT),
-        timeout=60,
+        timeout=180,
     )
-    if "再见" in result.stdout or "Twist" in result.stdout or "Hibs" in result.stdout:
+    if "Goodbye" in result.stdout or "Hibs" in result.stdout or "headless" in result.stdout:
         print("  ✅ chat 启动正常")
     else:
         print(f"  ⚠️ chat 输出异常: {result.stdout[:200]}")
     if result.stderr:
-        # 过滤掉 UserWarning
         for line in result.stderr.split("\n"):
             if "UserWarning" in line or "ARRAY_API" in line or "device:" in line:
                 continue
